@@ -25,7 +25,3 @@ A basic forum style message board, with posts, replies to posts, and replies to 
 
 # Requirements
 - This project will fulfill a forum-like interface that a community could use to discuss things in a way that people outside of the community can still read discussions and glean information without having to make an account.
-
-# GROUP
-- Zach Marshall
-- Thomas Le Sueur
