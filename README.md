@@ -9,9 +9,9 @@ A basic forum style message board, with posts, replies to posts, and replies to 
 - Account management
 - Searchable outside of having an account
 - Search system
+- Image support
 
 ## Nice to have
-- Image support
 - PFP support
 - youtube/other site embeds
 - multiple categories
