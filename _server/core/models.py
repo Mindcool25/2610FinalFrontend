@@ -11,7 +11,7 @@ class Post(models.Model):
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
     title = models.TextField()
     content = models.TextField()
-    parent = models.ForeignKey('self', on_delete=models.CASCADE)
+    parent = models.ForeignKey('self', on_delete=models.CASCADE, default=None)
 
 class Image(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
