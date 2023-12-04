@@ -5,6 +5,7 @@ from django.http import HttpResponse
 import json
 import os
 from django.contrib.auth.decorators import login_required
+from . import models
 
 # Load manifest when server launches
 MANIFEST = {}
@@ -31,6 +32,14 @@ class Post(View):
     # Create a new post
     @login_required
     def post(self, request):
+        newpost = models.Post
+        data = json.load(request.body.decode("utf-8"))
+        newpost.user = data.get("user")
+        newpost.topic = data.get("topic") # Probably get this dynamically
+        newpost.title = data.get("title")
+        newpost.content = data.get("content")
+        newpost.parent = data.get("parent") # Probably need to get this dynamically
+        newpost.save()
         return
 
 class GetPost(View):
