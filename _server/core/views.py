@@ -29,6 +29,7 @@ class Post(View):
     def get(self, request):
         return
     # Create a new post
+    @login_required
     def post(self, request):
         return
 
@@ -37,6 +38,7 @@ class GetPost(View):
     def get(self, request):
         return
     # Edit given post (If correct user)
+    @login_required
     def post(self, request):
         return
 
@@ -44,6 +46,7 @@ class GetImage(View):
     # Get given image 
     def get(self, request):
         return
+    @login_required
     # Remove given image (if logged in)
     def post(self, request):
         return
@@ -53,6 +56,7 @@ class Topic(View):
     def get(self, request):
         return
     # Create a new topic
+    @login_required
     def post(self, request):
         return
 
@@ -61,6 +65,7 @@ class GetTopic(View):
     def get(self, request):
         return
     # Edit given topic (If logged in)
+    @login_required
     def post(self, request):
         return
 
@@ -69,5 +74,6 @@ class Images(View):
     def get(self, request):
         return
     # Save an image
+    @login_required
     def post(self, request):
         return
