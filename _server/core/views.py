@@ -34,13 +34,16 @@ class Post(View):
     def post(self, request):
         newpost = models.Post
         data = json.load(request.body.decode("utf-8"))
-        newpost.user = data.get("user")
-        newpost.topic = data.get("topic") # Probably get this dynamically
-        newpost.title = data.get("title")
-        newpost.content = data.get("content")
-        newpost.parent = data.get("parent") # Probably need to get this dynamically
-        newpost.save()
-        return
+        try:
+            newpost.user = data.get("user")
+            newpost.topic = data.get("topic") # Probably get this dynamically
+            newpost.title = data.get("title")
+            newpost.content = data.get("content")
+            newpost.parent = data.get("parent") # Probably need to get this dynamically
+            newpost.save()
+            return
+        except:
+            return HttpResponse("Bad data")
 
 class GetPost(View):
     # Get given post
@@ -67,7 +70,15 @@ class Topic(View):
     # Create a new topic
     @login_required
     def post(self, request):
-        return
+        newTopic = models.Topic
+        data = json.load(request.body.decode("utf-8"))
+        try:
+            newTopic.title = data.get("title")
+            newTopic.description = data.get("description")
+            newTopic.save()
+            return
+        except:
+            return HttpResponse("Bad data")
 
 class GetTopic(View):
     # Return given topic
