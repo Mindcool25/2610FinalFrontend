@@ -2,6 +2,7 @@ from django.views import View
 from django.shortcuts import render
 from django.conf  import settings
 from django.http import HttpResponse
+from django.http import JsonResponse
 import json
 import os
 from django.contrib.auth.decorators import login_required
@@ -26,9 +27,18 @@ def index(req):
     return render(req, "core/index.html", context)
 
 class Post(View):
-    # Return error, get not allowed
+    # Get an amount of posts
     def get(self, request):
-        return
+        posts = Post.objects.filter().order_by('-date')[0::10]
+        ret = {"posts":[]}
+        for post in posts:
+            temp = {}
+            temp["user"] = post.user
+            temp["topic"] = post.topic
+            temp["content"] = post.content
+            temp["parent"] = post.parent
+            ret["posts"].append(temp)
+        return JsonResponse(ret)
     # Create a new post
     @login_required
     def post(self, request):
