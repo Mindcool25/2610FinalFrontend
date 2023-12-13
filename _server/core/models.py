@@ -6,7 +6,7 @@ class Topic(models.Model):
     title = models.TextField()
     description = models.TextField()
 
-class Post(models.Model):
+class UserPost(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE,default=None)
     title = models.TextField()
