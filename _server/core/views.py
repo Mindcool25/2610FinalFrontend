@@ -43,7 +43,7 @@ class Post(View):
     # Create a new post
     #@login_required
     def post(self, request):
-        newpost = models.UserPost
+        newpost = models.UserPost()
         data = json.loads(request.body.decode("utf-8"))
         try:
             newpost.user = request.user
@@ -55,10 +55,11 @@ class Post(View):
             except:
                 newpost.parent = None
             print("FUCKING WORK")
-            newpost.save()
-            return JsonResponse({"Fuck":"Shit"})
         except:
-            return HttpResponse("Bad data")
+            print("OH FUCK")
+            return JsonResponse({"error":"Bad data"})
+        newpost.save()
+        return JsonResponse({"Fuck":"Shit"})
 
 class GetPost(View):
     # Get given post, load children
