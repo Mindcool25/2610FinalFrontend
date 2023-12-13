@@ -11,7 +11,7 @@ class UserPost(models.Model):
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE,default=None)
     title = models.TextField()
     content = models.TextField()
-    parent = models.OneToOneField('self', on_delete=models.CASCADE, default=None, allow_null=True)
+    parent = models.OneToOneField('self', on_delete=models.CASCADE, default=None, null=True)
 
 class Image(models.Model):
     post = models.ForeignKey(UserPost, on_delete=models.CASCADE)
