@@ -14,5 +14,5 @@ class UserPost(models.Model):
     parent = models.OneToOneField('self', on_delete=models.CASCADE, default=None)
 
 class Image(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    post = models.ForeignKey(UserPost, on_delete=models.CASCADE)
     file = models.ImageField(upload_to="images")
