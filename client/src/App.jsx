@@ -31,6 +31,7 @@ function App() {
     const options = {
       method:"POST",
       body: JSON.stringify(data),
+      credentials: "same-origin",
       headers: {
         "X-CSRFToken": cookie.parse(document.cookie).csrftoken
       }
