@@ -70,7 +70,9 @@ class GetPost(View):
         except:
             return HttpResponse("Bad data")
         for i in range(10):
-            if hasattr(post, "post")
+            if hasattr(post, "post"):
+                print("HA")
+        return JsonResponse(ret)
             
             
 
