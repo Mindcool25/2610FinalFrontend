@@ -2,6 +2,10 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import cookie from "cookie"
+import { Link } from 'react-router-dom'
+
+
 
 function App() {
   const [count, setCount] = useState(0)
@@ -17,6 +21,21 @@ function App() {
     } else {
       // handle logout failed!
     }
+  }
+
+  async function makePost() {
+    const data = {
+      title: "penis",
+      content: "penis man"
+    }
+    const options = {
+      method:"POST",
+      body: JSON.stringify(data),
+      headers: {
+        "X-CSRFToken": cookie.parse(document.cookie).csrftoken
+      }
+    }
+    fetch ("/post/", options)
   }
 
   return (
@@ -41,7 +60,7 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
-      <button onClick={logout}>Logout</button>
+      <button onClick={logout}>Logout</button> <button onClick={makePost}>post</button> <Link to={'/post/1'}>post</Link>
     </>
   )
 }
