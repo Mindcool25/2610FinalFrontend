@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-function wholePost(props){
+export function WholePost(props){
     const [posts, setPosts] = useState([])
 
     async function getPost(id) {
