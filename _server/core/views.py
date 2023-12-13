@@ -41,12 +41,12 @@ class Post(View):
         return JsonResponse(ret)
 
     # Create a new post
-    @login_required
+    #@login_required
     def post(self, request):
-        print("FUCK DO THE THING")
         newpost = models.UserPost
-        data = json.load(request.body.decode("utf-8"))
+        data = json.loads(request.body.decode("utf-8"))
         try:
+            print("FUCK DO THE THING")
             newpost.user = None # request.user
             newpost.topic = None #data.get("topic") # Probably get this dynamically
             newpost.title = data.get("title")
