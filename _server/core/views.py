@@ -46,5 +46,25 @@ class NewPost(View):
             return JsonResponse({"message":"Failed"})
 
 class GetPost(View):
-    def get(self, req):
+    def get(self, req, id):
+        ret = {"posts":[]}
+        try:
+            post = models.Post.objects.filter(id=id)[0]
+            for i in range(10):
+                ret["posts"].append(jsonPost(post))
+                if hasattr(post, "post"):
+                    post = post.post
+                else:
+                    return JsonResponse(ret)
+            return JsonResponse(ret)
+        except Exception as e:
+            return JsonResponse({"message":str(e)})
         return
+
+def jsonPost(post):
+    return {
+            "user": post.user.username,
+            "topic": post.topic,
+            "title": post.title,
+            "content": post.content,
+            }

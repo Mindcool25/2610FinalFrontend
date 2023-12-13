@@ -27,7 +27,7 @@ function App() {
     const data = {
       title: "penis",
       content: "penis man",
-      parent: 4
+      parent: 1
     }
     const options = {
       method:"POST",
@@ -37,7 +37,7 @@ function App() {
         "X-CSRFToken": cookie.parse(document.cookie).csrftoken
       }
     }
-    fetch ("post", options)
+    fetch ("newpost", options)
   }
 
   return (
