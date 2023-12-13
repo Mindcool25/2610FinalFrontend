@@ -46,7 +46,6 @@ class Post(View):
         newpost = models.UserPost
         data = json.loads(request.body.decode("utf-8"))
         try:
-            print("FUCK DO THE THING")
             newpost.user = None # request.user
             newpost.topic = None #data.get("topic") # Probably get this dynamically
             newpost.title = data.get("title")
@@ -55,6 +54,7 @@ class Post(View):
                 newpost.parent = models.UserPost.objects.filter(id=data.get("parent"))
             except:
                 newpost.parent = None
+            print("FUCKING WORK")
             newpost.save()
             return JsonResponse({"Fuck":"Shit"})
         except:
