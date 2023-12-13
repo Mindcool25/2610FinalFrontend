@@ -8,7 +8,7 @@ class Topic(models.Model):
 
 class UserPost(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    topic = models.ForeignKey(Topic, on_delete=models.CASCADE,default=None)
+    topic = models.ForeignKey(Topic, on_delete=models.CASCADE, default=None, null=True)
     title = models.TextField()
     content = models.TextField()
     parent = models.OneToOneField('self', on_delete=models.CASCADE, default=None, null=True)

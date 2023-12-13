@@ -50,7 +50,7 @@ class Post(View):
             newpost.topic = None #data.get("topic") # Probably get this dynamically
             newpost.title = data.get("title")
             newpost.content = data.get("content")
-            newpost.parent = newpost
+            newpost.parent = None
             print("FUCKING WORK")
         except:
             print("OH FUCK")
