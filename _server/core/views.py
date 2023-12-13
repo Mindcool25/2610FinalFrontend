@@ -50,13 +50,14 @@ class Post(View):
             newpost.topic = None #data.get("topic") # Probably get this dynamically
             newpost.title = data.get("title")
             newpost.content = data.get("content")
-            newpost.parent = None
-            print("FUCKING WORK")
+            try:
+                newpost.parent = models.UserPost.objects.filter(id=data.get("parent"))[0]
+            except:
+                newpost.parent = None
+            newpost.save()
         except:
-            print("OH FUCK")
-            return JsonResponse({"error":"Bad data"})
-        newpost.save()
-        return JsonResponse({"Fuck":"Shit"})
+            return JsonResponse({"Error":"Failed to save post"})
+            
 
 class GetPost(View):
     # Get given post, load children
