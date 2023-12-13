@@ -4,7 +4,7 @@ export function WholePost(props){
     const [posts, setPosts] = useState([])
 
     async function getPost(id) {
-        const res = await fetch("/post/1", {
+        const res = await fetch("post/1", {
           credentials: "same-origin", // include cookies!
         });
     

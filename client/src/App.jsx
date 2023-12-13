@@ -26,7 +26,8 @@ function App() {
   async function makePost() {
     const data = {
       title: "penis",
-      content: "penis man"
+      content: "penis man",
+      parent: 4
     }
     const options = {
       method:"POST",
