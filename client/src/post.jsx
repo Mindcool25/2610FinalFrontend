@@ -7,19 +7,20 @@ export function WholePost(props){
         const res = await fetch("/getpost/1", {
           credentials: "same-origin", // include cookies!
         });
+        console.log("AM HERE");
 
-        await console.log(await res)
-    
         if (res.ok) {
-          const body = await res.json
-          return body.json();
+          return await res.json();
         } else {
           // handle logout failed!
         }
       }
     useEffect ( () => {
-        const newPosts = getPost(props.id)
-        setPosts([...posts, ...newPosts]);
+        const getPosts = async () => {
+            const newPosts = await getPost(props.id);
+            setPosts([...posts, ...newPosts.posts]);
+        }
+        getPosts();
     }, []);
 
     function Data(props){
@@ -33,7 +34,7 @@ export function WholePost(props){
     }
     
     const r = posts.map((post) =>
-    <Data post={post} key={post[id]}/>
+    <Data post={post} key={post.id}/>
     );
     return(
         <div>

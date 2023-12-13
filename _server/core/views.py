@@ -63,6 +63,7 @@ class GetPost(View):
 
 def jsonPost(post):
     return {
+            "id": post.id,
             "user": post.user.username,
             "topic": post.topic,
             "title": post.title,
