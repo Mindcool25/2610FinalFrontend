@@ -29,16 +29,17 @@ def index(req):
 class Post(View):
     # Get an amount of posts
     def get(self, request):
-        posts = Post.objects.filter().order_by('-date')[0::10]
+        posts = Post.objects.filter().order_by('-date')
         ret = {"posts":[]}
         for post in posts:
             temp = {}
-            temp["user"] = request.user
+            temp["user"] = request.user.username
             temp["topic"] = post.topic
             temp["content"] = post.content
             temp["parent"] = post.parent
             ret["posts"].append(temp)
         return JsonResponse(ret)
+
     # Create a new post
     @login_required
     def post(self, request):
@@ -46,18 +47,29 @@ class Post(View):
         data = json.load(request.body.decode("utf-8"))
         try:
             newpost.user = request.user
-            newpost.topic = data.get("topic") # Probably get this dynamically
+            #newpost.topic = data.get("topic") # Probably get this dynamically
             newpost.title = data.get("title")
             newpost.content = data.get("content")
-            newpost.parent = data.get("parent") # Probably need to get this dynamically
+            try:
+                newpost.parent = Post.objects.filter(id=data.get("parent"))
+            except:
+                newpost.parent = None
             newpost.save()
             return
         except:
             return HttpResponse("Bad data")
 
 class GetPost(View):
-    # Get given post
+    # Get given post, load children
     def get(self, request, id):
+        ret = {"posts":[]}
+        try:
+            post = Post.objects.filter(id=id)[0]
+        for i in range(10):
+            
+            
+
+
         return
     # Edit given post (If correct user)
     @login_required
