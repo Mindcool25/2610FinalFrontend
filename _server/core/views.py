@@ -33,7 +33,7 @@ class Post(View):
         ret = {"posts":[]}
         for post in posts:
             temp = {}
-            temp["user"] = request.user.username
+            temp["user"] = "FUCKING USER" #request.user.username
             temp["topic"] = post.topic
             temp["content"] = post.content
             temp["parent"] = post.parent
