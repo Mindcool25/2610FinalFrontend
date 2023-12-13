@@ -65,12 +65,15 @@ class GetPost(View):
         ret = {"posts":[]}
         try:
             post = models.UserPost.objects.filter(id=id)[0]
-            ret["posts"].append(post.content)
+            ret["posts"].append(jsonPost(post))
         except:
             return HttpResponse("Bad data")
         for i in range(10):
             if hasattr(post, "post"):
-                pass
+                post = post.post
+                ret["posts"].append(jsonPost(post))
+            else:
+                return JsonResponse(ret)
         return JsonResponse(ret)
             
             
@@ -131,3 +134,10 @@ class Images(View):
     @login_required
     def post(self, request):
         return
+
+def jsonPost(post):
+    return {
+            "user":"Fuck",
+            "title":post.title,
+            "content":post.content,
+            }
