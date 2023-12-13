@@ -35,7 +35,7 @@ function App() {
         "X-CSRFToken": cookie.parse(document.cookie).csrftoken
       }
     }
-    fetch ("/core/post/", options)
+    fetch ("post", options)
   }
 
   return (
