@@ -26,118 +26,25 @@ def index(req):
     }
     return render(req, "core/index.html", context)
 
-class Post(View):
-    # Get an amount of posts
-    def get(self, request):
-        posts = models.UserPost.objects.filter().order_by('-date')
-        ret = {"posts":[]}
-        for post in posts:
-            temp = {}
-            temp["user"] = "FUCKING USER" #request.user.username
-            temp["topic"] = post.topic
-            temp["content"] = post.content
-            temp["parent"] = post.parent
-            ret["posts"].append(temp)
-        return JsonResponse(ret)
-
-    # Create a new post
-    #@login_required
-    def post(self, request):
-        newpost = models.UserPost()
-        data = json.loads(request.body.decode("utf-8"))
+class NewPost(View):
+    # TODO: Add topic stuff from front end
+    def post(self, req):
+        new = models.Post()
+        data = json.loads(req.body.decode("utf-8"))
         try:
-            newpost.user = request.user
-            newpost.topic = None #data.get("topic") # Probably get this dynamically
-            newpost.title = data.get("title")
-            newpost.content = data.get("content")
-            try:
-                newpost.parent = models.UserPost.objects.filter(id=data.get("parent"))[0]
-            except:
-                newpost.parent = None
-            newpost.save()
+            new.user = req.user
+            new.topic = None
+            new.title = data.get("title")
+            new.content = data.get("content")
+            if "parent" in data.keys():
+                new.parent = models.Post.objects.filter(id=data.get("parent"))[0]
+            else:
+                new.parent = None
+            new.save()
+            return JsonResponse({"message":"Success"})
         except:
-            return JsonResponse({"Error":"Failed to save post"})
-            
+            return JsonResponse({"message":"Failed"})
 
 class GetPost(View):
-    # Get given post, load children
-    def get(self, request, id):
-        ret = {"posts":[]}
-        try:
-            post = models.UserPost.objects.filter(id=id)[0]
-            ret["posts"].append(jsonPost(post))
-        except:
-            return HttpResponse("Bad data")
-        for i in range(10):
-            if hasattr(post, "post"):
-                post = post.post
-                ret["posts"].append(jsonPost(post))
-            else:
-                return JsonResponse(ret)
-        return JsonResponse(ret)
-            
-            
-
-
+    def get(self, req):
         return
-    # Edit given post (If correct user)
-    @login_required
-    def post(self, request, id):
-        return
-
-class GetImage(View):
-    # Get given image 
-    def get(self, request):
-        return
-    @login_required
-    # Remove given image (if logged in)
-    def post(self, request):
-        return
-
-class Topic(View):
-    # Return all topics
-    def get(self, request):
-        return
-    # Create a new topic
-    @login_required
-    def post(self, request):
-        newTopic = models.Topic
-        data = json.load(request.body.decode("utf-8"))
-        try:
-            newTopic.title = data.get("title")
-            newTopic.description = data.get("description")
-            newTopic.save()
-            return
-        except:
-            return HttpResponse("Bad data")
-
-class GetTopic(View):
-    # Return given topic
-    def get(self, request):
-        return
-    # Edit given topic (If logged in)
-    @login_required
-    def post(self, request):
-        return
-
-class GetUser(View):
-    def get(self, request, id):
-        return
-    def post(self, request):
-        return
-
-class Images(View):
-    # Get an image
-    def get(self, request):
-        return
-    # Save an image
-    @login_required
-    def post(self, request):
-        return
-
-def jsonPost(post):
-    return {
-            "user":"Fuck",
-            "title":post.title,
-            "content":post.content,
-            }
