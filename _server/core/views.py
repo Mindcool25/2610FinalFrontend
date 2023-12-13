@@ -26,25 +26,25 @@ def index(req):
     }
     return render(req, "core/index.html", context)
 
-class NewPost(View):
-    # TODO: Add topic stuff from front end
-    def post(self, req):
-        new = models.Post()
-        data = json.loads(req.body.decode("utf-8"))
-        try:
-            new.user = req.user
-            new.topic = None
-            new.title = data.get("title")
-            new.content = data.get("content")
-            if "parent" in data.keys():
-                new.parent = models.Post.objects.filter(id=data.get("parent"))[0]
-            else:
-                new.parent = None
-            new.save()
-            return JsonResponse({"message":"Success"})
-        except:
-            return JsonResponse({"message":"Failed"})
+@login_required
+def new_post(req):
+    new = models.Post()
+    data = json.loads(req.body.decode("utf-8"))
+    try:
+        new.user = req.user
+        new.topic = models.Topic.objects.filter(id=data.get("topic"))[0]
+        new.title = data.get("title")
+        new.content = data.get("content")
+        if "parent" in data.keys():
+            new.parent = models.Post.objects.filter(id=data.get("parent"))[0]
+        else:
+            new.parent = None
+        new.save()
+        return JsonResponse({"message":"Success"})
+    except:
+        return JsonResponse({"message":"Failed"})
 
+# TODO: Reformat this
 class GetPost(View):
     def get(self, req, id):
         ret = {"posts":[]}
@@ -59,13 +59,46 @@ class GetPost(View):
             return JsonResponse(ret)
         except Exception as e:
             return JsonResponse({"message":str(e)})
-        return
 
-def jsonPost(post):
+def jsonPost( post):
     return {
             "id": post.id,
             "user": post.user.first_name,
-            "topic": post.topic,
+            "topic": post.topic.title,
             "title": post.title,
-            "content": post.content,
-            }
+            "content": post.content,}
+
+@login_required
+def new_topic(req):
+    if req.method != "post":
+        return JsonResponse({"message":"Failed"})
+    new = models.Topic()
+    data = json.loads(req.body.decode("utf-8"))
+    try:
+        new.title = data.get("title")
+        new.description = data.get("description")
+        new.save()
+        return JsonResponse({"message":"Success"})
+    except Exception as e:
+        return JsonResponse({"message":str(e)})
+
+def get_topic(req, id):
+    ret = {"title":"", "description":"", "posts":[]}
+    topic = models.Topic.objects.filter(id=id)[0]
+    ret["title"] = topic.title
+    ret["description"] = topic.description
+    posts = models.Post.objects.select_related().filter(topic=topic)
+    for post in posts:
+        ret["posts"].append(jsonPost(post))
+    return JsonResponse(ret)
+
+
+def get_topics(req):
+    topics = models.Topic.objects.all()
+    ret = {"topics":[]}
+    for topic in topics:
+        ret["topics"].append({
+            "title": topic.title,
+            "description": topic.description
+            })
+    return JsonResponse(ret)
