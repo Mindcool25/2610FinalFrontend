@@ -56,7 +56,7 @@ class Post(View):
             except:
                 newpost.parent = None
             newpost.save()
-            return
+            return JsonResponse({"Fuck":"Shit"})
         except:
             return HttpResponse("Bad data")
 
@@ -66,7 +66,11 @@ class GetPost(View):
         ret = {"posts":[]}
         try:
             post = Post.objects.filter(id=id)[0]
+            ret["posts"].append(post)
+        except:
+            return HttpResponse("Bad data")
         for i in range(10):
+            if hasattr(post, "post")
             
             
 
