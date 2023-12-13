@@ -33,7 +33,7 @@ class Post(View):
         ret = {"posts":[]}
         for post in posts:
             temp = {}
-            temp["user"] = post.user
+            temp["user"] = request.user
             temp["topic"] = post.topic
             temp["content"] = post.content
             temp["parent"] = post.parent
@@ -45,7 +45,7 @@ class Post(View):
         newpost = models.Post
         data = json.load(request.body.decode("utf-8"))
         try:
-            newpost.user = data.get("user")
+            newpost.user = request.user
             newpost.topic = data.get("topic") # Probably get this dynamically
             newpost.title = data.get("title")
             newpost.content = data.get("content")
@@ -57,11 +57,11 @@ class Post(View):
 
 class GetPost(View):
     # Get given post
-    def get(self, request):
+    def get(self, request, id):
         return
     # Edit given post (If correct user)
     @login_required
-    def post(self, request):
+    def post(self, request, id):
         return
 
 class GetImage(View):
@@ -96,6 +96,12 @@ class GetTopic(View):
         return
     # Edit given topic (If logged in)
     @login_required
+    def post(self, request):
+        return
+
+class GetUser(View):
+    def get(self, request, id):
+        return
     def post(self, request):
         return
 
