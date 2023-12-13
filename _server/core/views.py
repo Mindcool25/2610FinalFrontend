@@ -47,7 +47,7 @@ class Post(View):
         newpost = models.Post
         data = json.load(request.body.decode("utf-8"))
         try:
-            newpost.user = request.user
+            newpost.user = None # request.user
             newpost.topic = None #data.get("topic") # Probably get this dynamically
             newpost.title = data.get("title")
             newpost.content = data.get("content")
@@ -71,7 +71,7 @@ class GetPost(View):
             return HttpResponse("Bad data")
         for i in range(10):
             if hasattr(post, "post"):
-                print("HA")
+                pass
         return JsonResponse(ret)
             
             
