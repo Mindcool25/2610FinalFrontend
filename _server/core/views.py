@@ -29,7 +29,7 @@ def index(req):
 class Post(View):
     # Get an amount of posts
     def get(self, request):
-        posts = Post.objects.filter().order_by('-date')
+        posts = models.Post.objects.filter().order_by('-date')
         ret = {"posts":[]}
         for post in posts:
             temp = {}
@@ -52,7 +52,7 @@ class Post(View):
             newpost.title = data.get("title")
             newpost.content = data.get("content")
             try:
-                newpost.parent = Post.objects.filter(id=data.get("parent"))
+                newpost.parent = models.Post.objects.filter(id=data.get("parent"))
             except:
                 newpost.parent = None
             newpost.save()
@@ -65,7 +65,7 @@ class GetPost(View):
     def get(self, request, id):
         ret = {"posts":[]}
         try:
-            post = Post.objects.filter(id=id)[0]
+            post = models.Post.objects.filter(id=id)[0]
             ret["posts"].append(post.content)
         except:
             return HttpResponse("Bad data")
