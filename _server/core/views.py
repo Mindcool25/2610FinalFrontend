@@ -46,7 +46,7 @@ class Post(View):
         newpost = models.UserPost
         data = json.loads(request.body.decode("utf-8"))
         try:
-            newpost.user = None # request.user
+            newpost.user = request.user
             newpost.topic = None #data.get("topic") # Probably get this dynamically
             newpost.title = data.get("title")
             newpost.content = data.get("content")
