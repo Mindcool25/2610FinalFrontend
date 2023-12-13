@@ -66,7 +66,7 @@ class GetPost(View):
         ret = {"posts":[]}
         try:
             post = Post.objects.filter(id=id)[0]
-            ret["posts"].append(post)
+            ret["posts"].append(post.content)
         except:
             return HttpResponse("Bad data")
         for i in range(10):
