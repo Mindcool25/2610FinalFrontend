@@ -102,3 +102,18 @@ def get_topics(req):
             "description": topic.description
             })
     return JsonResponse(ret)
+
+def new_image(req):
+    if req.method != "post":
+        return JsonResponse({"message":"Failed"})
+    data = req.data
+    new = models.Image()
+    new.post = data.Post.objects.filter(id=data["post"])
+    new.image = request.FILES.get('image')
+    new.save()
+    return JsonResponse({"message":"Success"})
+
+def get_image(req, id):
+    image = models.Image.objects.filter(id=id)
+    ret = {"path":image.path}
+    return JsonResponse(ret)
