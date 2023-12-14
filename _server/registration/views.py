@@ -11,7 +11,7 @@ def sign_up(req):
             password=req.POST.get("password"),
             email=req.POST.get("email"),
             first_name=req.POST.get("first_name"),
-            last_name=req.POST.get("last_name")
+            last_name=""
         )
         login(req, user)
         return redirect("/")
