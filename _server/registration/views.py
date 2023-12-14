@@ -7,11 +7,9 @@ from django.http import JsonResponse
 def sign_up(req):
     if req.method == "POST":
         user = User.objects.create_user(
-            username=req.POST.get("email"),
+            username=req.POST.get("Username"),
             password=req.POST.get("password"),
             email=req.POST.get("email"),
-            first_name=req.POST.get("first_name"),
-            last_name=""
         )
         login(req, user)
         return redirect("/")
