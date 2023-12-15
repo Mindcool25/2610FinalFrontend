@@ -4,6 +4,7 @@ import App from './App.jsx'
 import { WholePost } from './post.jsx'
 import { Topic } from './topic.jsx'
 import { NewParent } from './newparent.jsx'
+import { NewTopic } from './newtopic.jsx'
 import './index.css'
 import 'vite/modulepreload-polyfill'
 
@@ -25,8 +26,11 @@ const router = createBrowserRouter([
   {
     path: "/newparent/:id",
     element:<NewParent/>
+  },
+  {
+    path: "/newtopic/",
+    element:<NewTopic/>
   }
-
 ]);
 
 

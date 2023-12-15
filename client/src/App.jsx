@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -23,47 +23,43 @@ function App() {
     }
   }
 
-  
-  async function makeTopic() {
-    const data = {
-        title: "YEet",
-        description: "HAS TOPIC :3",
-    }
-    const options = {
-      method:"POST",
-      body: JSON.stringify(data),
-      credentials: "same-origin",
-      headers: {
-        "X-CSRFToken": cookie.parse(document.cookie).csrftoken
+
+
+  const [topics, setTopics] = useState([])
+
+  async function getTopics() {
+      const res = await fetch(`/gettopics`, {
+        credentials: "same-origin", // include cookies!
+      });
+      console.log("AM HERE");
+
+      if (res.ok) {
+        return await res.json();
+      } else {
+        // handle logout failed!
       }
     }
-    fetch ("newtopic", options)
-  }
+  useEffect ( () => {
+      const getPosts = async () => {
+          const newTopics = await getTopics();
+          console.log(newTopics)
+          setTopics([...newTopics.topics]);
+      }
+      getPosts();
+  }, []);
 
-  return (
-    <>
+  const r = topics.map((topic) =>
+  <Link to={`/topic/${topic.id}`}key={topic.id}>
+    <h2>{topic.title}</h2>
+    <p>{topic.description}</p>
+  </Link>
+  );
+  return(
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+          <Link to={`/newtopic/`}>New Topic</Link><button onClick={logout}>Logout</button>
+
+          {r}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-      <button onClick={logout}>Logout</button><button onClick={makeTopic}>topic</button> <Link to={'/topic/1'}>topic</Link>
-    </>
   )
 }
 

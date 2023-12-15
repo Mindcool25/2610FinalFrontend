@@ -107,7 +107,8 @@ def get_topics(req):
     for topic in topics:
         ret["topics"].append({
             "title": topic.title,
-            "description": topic.description
+            "description": topic.description,
+            "id": topic.id
             })
     return JsonResponse(ret)
 
