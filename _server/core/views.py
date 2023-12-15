@@ -63,14 +63,19 @@ class GetPost(View):
 def jsonPost(post):
     if post == None:
         print("NO POST :(")
-    print(post)
-
+    images = models.image.objects.filter(post=post)
+    image_paths = []
+    for image in images
+        image = models.Image.objects.filter(id=id)
+        image_paths.append({"path":image.path,"width":image.width,"height":image.height})
     return {
             "id": post.id,
             "user": post.user.username,
             "topic": post.topic.title,
             "title": post.title,
-            "content": post.content,}
+            "content": post.content,
+            "images": image_paths,
+            }
 
 @login_required
 def new_topic(req):
