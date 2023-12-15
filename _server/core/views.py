@@ -60,10 +60,14 @@ class GetPost(View):
         except Exception as e:
             return JsonResponse({"message":str(e)})
 
-def jsonPost( post):
+def jsonPost(post):
+    if post == None:
+        print("NO POST :(")
+    print(post)
+
     return {
             "id": post.id,
-            "user": post.user.first_name,
+            "user": post.user.username,
             "topic": post.topic.title,
             "title": post.title,
             "content": post.content,}
@@ -89,7 +93,8 @@ def get_topic(req, id):
     ret["description"] = topic.description
     posts = models.Post.objects.select_related().filter(topic=topic)
     for post in posts:
-        ret["posts"].append(jsonPost(post))
+        if post.parent == None:
+            ret["posts"].append(jsonPost(post))
     return JsonResponse(ret)
 
 
