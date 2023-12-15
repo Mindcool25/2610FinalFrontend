@@ -42,14 +42,22 @@ export function WholePost(props){
     function NewChild(props) {
         const [title, newTitle] = useState("")
         const [content, newContent] = useState("")
+        const [file, setFile] = useState()
+
+        function handleChange(event) {
+            setFile(event.target.files[0])
+        }
     
         async function makePost(event) {
             event.preventDefault()
-            const data = {
+            let data = {
                 title: title,
                 content: content,
                 topic: posts[posts.length-1].topic,
-                parent: posts[posts.length-1].id
+                parent: posts[posts.length-1].id,
+            }
+            if (file != undefined){
+                data.push({has_image: true})
             }
             const options = {
               method:"POST",
@@ -69,6 +77,7 @@ export function WholePost(props){
             else{
                 setSave(true)
             }
+           
             
             
             
@@ -91,6 +100,9 @@ export function WholePost(props){
                         onChange={(e) => newContent(e.target.value)}
                     />
                     </label>
+                </div>
+                <div>
+                    <label>image(optional): <input type="file" id="avatar" name="image" accept="image/png, image/jpeg" onChange={handleChange}/></label>
                 </div>
                 <div>
                     <button onClick={makePost}>Save</button>
