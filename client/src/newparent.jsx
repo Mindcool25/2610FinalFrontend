@@ -22,7 +22,7 @@ export function NewParent(props) {
           }
         }
         
-        const e = await fetch ("/newpost", options)
+        const e = await fetch("/newpost", options)
         return(redirect(`/post/${e.id}`))
       }
 
