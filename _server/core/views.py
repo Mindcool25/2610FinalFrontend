@@ -115,5 +115,5 @@ def new_image(req):
 
 def get_image(req, id):
     image = models.Image.objects.filter(id=id)
-    ret = {"path":image.path}
+    ret = {"path":image.path,"width":image.width,"height":image.height}
     return JsonResponse(ret)

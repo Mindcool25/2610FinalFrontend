@@ -77,6 +77,8 @@ Returns a json object of a list of all topics.
 ### ``images/<int:id>``
 ```json
 {
-    "path":<path to image>
+    "path":<path to image>,
+    "width":<width of image>,
+    "height":<height of image>,
 }
 ```
