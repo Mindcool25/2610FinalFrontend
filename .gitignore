@@ -1,3 +1,4 @@
 /client/node_modules
 /_server/.env.example
 /_server/.env
+/_server/core/migrations/*
