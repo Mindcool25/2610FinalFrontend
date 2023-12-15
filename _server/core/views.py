@@ -74,12 +74,6 @@ def jsonPost(post):
 
 @login_required
 def new_topic(req):
-    if req.method != "post":
-        new = models.Topic()
-        new.title = "Yipee, topic"
-        new.description = "fuckign topic"
-        new.save()
-        return JsonResponse({"message":"Failed"})
     new = models.Topic()
     data = json.loads(req.body.decode("utf-8"))
     try:

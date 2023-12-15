@@ -23,12 +23,11 @@ function App() {
     }
   }
 
-  async function makePost() {
+  
+  async function makeTopic() {
     const data = {
         title: "YEet",
-        content: "HAS TOPIC :3",
-        topic: 1,
-        parent: 9
+        description: "HAS TOPIC :3",
     }
     const options = {
       method:"POST",
@@ -38,7 +37,7 @@ function App() {
         "X-CSRFToken": cookie.parse(document.cookie).csrftoken
       }
     }
-    fetch ("newpost", options)
+    fetch ("newtopic", options)
   }
 
   return (
@@ -63,7 +62,7 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
-      <button onClick={logout}>Logout</button> <button onClick={makePost}>post</button> <Link to={'/post/1'}>post</Link> <Link to={'/topic/1'}>topic</Link>
+      <button onClick={logout}>Logout</button><button onClick={makeTopic}>topic</button> <Link to={'/topic/1'}>topic</Link>
     </>
   )
 }

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Link, useParams } from 'react-router-dom'
 
 export function Data(props){
     return (
@@ -12,9 +13,10 @@ export function Data(props){
 
 export function WholePost(props){
     const [posts, setPosts] = useState([])
+    const { id } = useParams()
 
-    async function getPost(id) {
-        const res = await fetch(`/getpost/${id}`, {
+    async function getPost(funcid) {
+        const res = await fetch(`/getpost/${funcid}`, {
           credentials: "same-origin", // include cookies!
         });
         console.log("AM HERE");
@@ -27,7 +29,7 @@ export function WholePost(props){
       }
     useEffect ( () => {
         const getPosts = async () => {
-            const newPosts = await getPost(props.id);
+            const newPosts = await getPost(id);
             setPosts([...posts, ...newPosts.posts]);
         }
         getPosts();
