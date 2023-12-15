@@ -40,6 +40,12 @@ def new_post(req):
         else:
             new.parent = None
         new.save()
+        if data.get("has_image").lower() == "true":
+            data = req.data
+            im = models.Image()
+            im.post = new
+            im.image = request.FILES.get('image')
+            im.save()
         return JsonResponse({"id":new.id})
     except Exception as e:
         return JsonResponse({"message":str(e)})
