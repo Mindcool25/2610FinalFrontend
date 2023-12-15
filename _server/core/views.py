@@ -50,7 +50,7 @@ class GetPost(View):
         ret = {"posts":[]}
         try:
             post = models.Post.objects.filter(id=id)[0]
-            for i in range(10):
+            while hasattr(post, "post"):
                 ret["posts"].append(jsonPost(post))
                 if hasattr(post, "post"):
                     post = post.post
