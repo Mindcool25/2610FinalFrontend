@@ -40,7 +40,7 @@ def new_post(req):
         else:
             new.parent = None
         new.save()
-        return JsonResponse({"message":"Success"})
+        return JsonResponse({"id":new.id})
     except Exception as e:
         return JsonResponse({"message":str(e)})
 
@@ -63,9 +63,9 @@ class GetPost(View):
 def jsonPost(post):
     if post == None:
         print("NO POST :(")
-    images = models.image.objects.filter(post=post)
+    images = models.Image.objects.filter(post=post)
     image_paths = []
-    for image in images
+    for image in images:
         image = models.Image.objects.filter(id=id)
         image_paths.append({"path":image.path,"width":image.width,"height":image.height})
     return {
