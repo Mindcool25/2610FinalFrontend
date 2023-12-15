@@ -3,10 +3,13 @@ from django.shortcuts import render
 from django.conf  import settings
 from django.http import HttpResponse
 from django.http import JsonResponse
+from django.core.files.base import ContentFile
 import json
 import os
 from django.contrib.auth.decorators import login_required
 from . import models
+import base64
+import datetime
 
 # Load manifest when server launches
 MANIFEST = {}
@@ -30,6 +33,7 @@ def index(req):
 def new_post(req):
     new = models.Post()
     data = json.loads(req.body.decode("utf-8"))
+    print(data)
     try:
         new.user = req.user
         new.topic = models.Topic.objects.filter(id=data.get("topic"))[0]
@@ -41,21 +45,26 @@ def new_post(req):
             new.parent = None
         new.save()
         if data.get("has_image").lower() == "true":
-            data = req.data
+            # I am so sorry.
             im = models.Image()
             im.post = new
-            im.image = request.FILES.get('image')
+            im_data = data.get('image')
+            im_type = im_data.split(";")[0].split("/")[1]
+            if im_type == "jpeg":
+                im_type = "jpg"
+            im_body = base64.b64decode(im_data.split("base64,")[1])
+            im_name = f"{str(datetime.datetime.now())}.{im_type}"
+            im.file = ContentFile(im_body, im_name)
             im.save()
         return JsonResponse({"id":new.id})
     except Exception as e:
         return JsonResponse({"message":str(e)})
 
-# TODO: Reformat this
 class GetPost(View):
-    def get(self, req, id):
+    def get(self, req, post_id):
         ret = {"posts":[]}
         try:
-            post = models.Post.objects.filter(id=id)[0]
+            post = models.Post.objects.filter(id=post_id)[0]
             while True:
                 ret["posts"].append(jsonPost(post))
                 if hasattr(post, "post"):
@@ -72,8 +81,7 @@ def jsonPost(post):
     images = models.Image.objects.filter(post=post)
     image_paths = []
     for image in images:
-        image = models.Image.objects.filter(id=id)
-        image_paths.append({"path":image.path,"width":image.width,"height":image.height})
+        image_paths.append({"path":image.file.path,"width":image.file.width,"height":image.file.height})
     return {
             "id": post.id,
             "user": post.user.username,
@@ -129,6 +137,6 @@ def new_image(req):
     return JsonResponse({"message":"Success"})
 
 def get_image(req, id):
-    image = models.Image.objects.filter(id=id)
-    ret = {"path":image.path,"width":image.width,"height":image.height}
+    image = models.Image.objects.filter(id=id)[0]
+    ret = {"path":image.file.path,"width":image.file.width,"height":image.file.height}
     return JsonResponse(ret)

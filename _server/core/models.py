@@ -13,6 +13,10 @@ class Post(models.Model):
     content = models.TextField()
     parent = models.OneToOneField('self', on_delete=models.CASCADE, default=None, null=True)
 
+
+def upload_to(instance, filename):
+    return 'images/{filename}'.format(filename=filename)
+
 class Image(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     file = models.ImageField(upload_to="images/")

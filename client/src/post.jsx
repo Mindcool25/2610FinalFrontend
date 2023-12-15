@@ -22,7 +22,6 @@ export function WholePost(props){
         const res = await fetch(`/getpost/${funcid}`, {
           credentials: "same-origin", // include cookies!
         });
-        console.log("AM HERE");
 
         if (res.ok) {
           return await res.json();
@@ -33,7 +32,7 @@ export function WholePost(props){
     useEffect ( () => {
         const getPosts = async () => {
             const newPosts = await getPost(id);
-            setPosts([...newPosts.posts]);
+            await setPosts([...newPosts.posts]);
             setLast(newPosts[newPosts.length-1])
         }
         getPosts();
@@ -44,8 +43,16 @@ export function WholePost(props){
         const [content, newContent] = useState("")
         const [file, setFile] = useState()
 
-        function handleChange(event) {
-            setFile(event.target.files[0])
+        function handleChange(e) {
+            const f = e.target.files[0];
+            const reader = new FileReader();
+            reader.onload = () => {
+                setFile(reader.result);
+                console.log(file);
+            }
+            if (f){
+                reader.readAsDataURL(f)
+            }
         }
     
         async function makePost(event) {
@@ -56,15 +63,17 @@ export function WholePost(props){
                 topic: posts[posts.length-1].topic,
                 parent: posts[posts.length-1].id,
             }
+            console.log(file);
             if (file != undefined){
-                data.push({has_image: true})
+                data.has_image = "true";
+                data.image = file
             }
             const options = {
               method:"POST",
               body: JSON.stringify(data),
               credentials: "same-origin",
               headers: {
-                "X-CSRFToken": cookie.parse(document.cookie).csrftoken
+                "X-CSRFToken": cookie.parse(document.cookie).csrftoken,
               }
             }
             console.log(data)
@@ -77,11 +86,6 @@ export function WholePost(props){
             else{
                 setSave(true)
             }
-           
-            
-            
-            
-            
         }
     
         return(

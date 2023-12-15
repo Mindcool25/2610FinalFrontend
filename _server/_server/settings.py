@@ -13,10 +13,14 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 from dotenv import load_dotenv
 
+import os
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv()
 
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -131,3 +135,7 @@ STATIC_URL = 'static/' if not DEBUG else "__UNUSED__/"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = "registration/sign_in/"
+
+MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "images")
+
+MEDIA_URL = "media/"
