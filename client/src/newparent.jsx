@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { Link, useParams, redirect } from 'react-router-dom'
+import { useState } from 'react'
+import { useParams, redirect } from 'react-router-dom'
 import cookie from "cookie"
 
 export function NewParent(props) {
@@ -22,11 +22,12 @@ export function NewParent(props) {
             "X-CSRFToken": cookie.parse(document.cookie).csrftoken
           }
         }
+        console.log("post made!")
+        await fetch("/newpost", options)
+        history.back()
         
-        const e = await fetch ("/newpost", options)
-        return(redirect(`/post/${e.id}`))
-      }
-
+        
+    }
 
     return(
         <form>

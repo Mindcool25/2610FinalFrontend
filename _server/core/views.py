@@ -71,7 +71,7 @@ def jsonPost(post):
     return {
             "id": post.id,
             "user": post.user.username,
-            "topic": post.topic.title,
+            "topic": post.topic.id,
             "title": post.title,
             "content": post.content,
             "images": image_paths,
