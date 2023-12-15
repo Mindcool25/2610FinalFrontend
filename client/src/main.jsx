@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import { WholePost } from './post.jsx'
+import { Topic } from './topic.jsx'
 import './index.css'
 import 'vite/modulepreload-polyfill'
 
@@ -13,8 +14,12 @@ const router = createBrowserRouter([
     element: <App/>,
   },
   {
-    path: "/post/1",
+    path: "/post/:id",
     element: <WholePost/>
+  },
+  {
+    path: "/topic/1",
+    element: <Topic/>
   }
 ]);
 

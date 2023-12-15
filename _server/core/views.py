@@ -41,8 +41,8 @@ def new_post(req):
             new.parent = None
         new.save()
         return JsonResponse({"message":"Success"})
-    except:
-        return JsonResponse({"message":"Failed"})
+    except Exception as e:
+        return JsonResponse({"message":str(e)})
 
 # TODO: Reformat this
 class GetPost(View):
@@ -75,6 +75,10 @@ def jsonPost(post):
 @login_required
 def new_topic(req):
     if req.method != "post":
+        new = models.Topic()
+        new.title = "Yipee, topic"
+        new.description = "fuckign topic"
+        new.save()
         return JsonResponse({"message":"Failed"})
     new = models.Topic()
     data = json.loads(req.body.decode("utf-8"))
