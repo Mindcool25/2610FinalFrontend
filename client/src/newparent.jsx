@@ -7,7 +7,8 @@ export function NewParent(props) {
     const [title, newTitle] = useState("")
     const [content, newContent] = useState("")
 
-    async function makePost() {
+    async function makePost(event) {
+        event.preventDefault()
         const data = {
             title: title,
             content: content,
