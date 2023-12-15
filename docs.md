@@ -45,6 +45,7 @@ Returns a json object of a list of all topics.
             "topic":<topic title>,
             "title":<post title>,
             "content":<post content>,
+            "images":[<image path>],
         },
     ]
 }
@@ -69,6 +70,7 @@ Returns a json object of a list of all topics.
             "topic":<topic title>,
             "title":<post title>,
             "content":<post content>,
+            "images":[<image path>],
         },
     ],
 }
