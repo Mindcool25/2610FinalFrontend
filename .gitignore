@@ -2,3 +2,4 @@
 /_server/.env.example
 /_server/.env
 /_server/core/migrations/*
+*.jpg
