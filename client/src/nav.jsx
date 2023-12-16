@@ -15,7 +15,7 @@ if (res.ok) {
 export function Navbox() {
       return (
       <div className="nav">
-          <Link to={''} className="home-button">Home</Link><Link to={`/newtopic/`} className="menu-button">New Topic</Link><a onClick={logout} className="menu-button">Logout</a>
+          <Link to={'/'} className="home-button">Home</Link><Link to={`/newtopic/`} className="menu-button">New Topic</Link><a onClick={logout} className="menu-button">Logout</a>
       </div>
   )
   }

@@ -36,7 +36,6 @@ export function Topic(props) {
     <Link  to={`/post/${post.id}`}key={post.id}>
       <Data post={post}/>
     </Link>
-            <p>FUCK</p>
         </div>
     );
     return(
