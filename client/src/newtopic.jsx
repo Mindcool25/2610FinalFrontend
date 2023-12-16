@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useParams, redirect } from 'react-router-dom'
 import cookie from "cookie"
+import { Navbox } from './nav'
 
 export function NewTopic(props) {
     const {id} = useParams()
@@ -29,6 +30,8 @@ export function NewTopic(props) {
     }
 
     return(
+        <div>
+        <Navbox/>
         <form>
             <div>
                 <label>Title: <input
@@ -49,6 +52,7 @@ export function NewTopic(props) {
                 <button onClick={makePost}>Save</button>
             </div>
         </form>
+        </div>
     )
 
 }

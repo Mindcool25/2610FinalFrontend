@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import cookie from "cookie"
+import { Navbox } from './nav'
 
 export function Data(props){
     const im_loop = () => {
         for (let i =0; i<props.post["images"]; i++) {
-            console.log("FUCK");
         }
     }
     return (
         <div className="post">
             <h2 className="postTitle">{props.post["title"]}</h2>
-            <h3 className="postUser">{props.post["user"]}</h3>
+            <h3 className="postUser">User: {props.post["user"]}</h3>
             <p className="postContent">{props.post["content"]}</p>
             {props.post["images"].map((image, i) => (
                 <img key={i} className="image" src={"http://localhost:8080" + image.path} height="200" ></img>
@@ -133,6 +133,7 @@ export function WholePost(props){
 
     return(
         <div>
+            <Navbox/>
             {r}
             <h2>New Post</h2>
             <NewChild/>

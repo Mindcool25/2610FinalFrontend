@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Data } from "./post";
 import { Link, useParams } from 'react-router-dom'
+import { Navbox } from './nav'
 
 
 export function Topic(props) {
@@ -13,7 +14,6 @@ export function Topic(props) {
         const res = await fetch(`/gettopic/${funcid}`, {
           credentials: "same-origin", // include cookies!
         });
-        console.log("AM HERE");
 
         if (res.ok) {
           return await res.json();
@@ -32,15 +32,19 @@ export function Topic(props) {
     }, []);
 
     const r = topic.map((post) =>
-    <Link to={`/post/${post.id}`}key={post.id}>
+        <div className="post-link">
+    <Link  to={`/post/${post.id}`}key={post.id}>
       <Data post={post}/>
     </Link>
+            <p>FUCK</p>
+        </div>
     );
     return(
         <div>
+            <Navbox/>
             <h1>{title}</h1>
             <p>{description}</p>
-            <Link to={`/newparent/${id}`}>New Post</Link>
+            <Link className="new-post" to={`/newparent/${id}`}>New Post</Link>
 
             {r}
         </div>

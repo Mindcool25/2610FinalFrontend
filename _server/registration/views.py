@@ -12,6 +12,7 @@ def sign_up(req):
             email=req.POST.get("email"),
         )
         login(req, user)
+        print("FUCK")
         return redirect("/")
     else:
         return render(req, "registration/sign_up.html")
