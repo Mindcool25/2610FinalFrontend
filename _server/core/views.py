@@ -81,7 +81,7 @@ def jsonPost(post):
     images = models.Image.objects.filter(post=post)
     image_paths = []
     for image in images:
-        image_paths.append({"path":image.file.path,"width":image.file.width,"height":image.file.height})
+        image_paths.append({"path":image.file.url,"width":image.file.width,"height":image.file.height})
     return {
             "id": post.id,
             "user": post.user.username,
@@ -138,5 +138,6 @@ def new_image(req):
 
 def get_image(req, id):
     image = models.Image.objects.filter(id=id)[0]
+    image_path = image.file.filename
     ret = {"path":image.file.path,"width":image.file.width,"height":image.file.height}
     return JsonResponse(ret)

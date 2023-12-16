@@ -127,7 +127,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 # DONT USE THE STATIC URL WHEN IN DEBUG MODE
-STATIC_URL = 'static/' if not DEBUG else "__UNUSED__/"
+STATIC_URL = 'static/' #if not DEBUG else "__UNUSED__/"
+
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static')
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, '../images'),
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -138,4 +144,4 @@ LOGIN_URL = "registration/sign_in/"
 
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "images")
 
-MEDIA_URL = "media/"
+MEDIA_URL = "images/"
