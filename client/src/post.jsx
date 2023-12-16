@@ -115,7 +115,7 @@ export function WholePost(props){
                     </label>
                 </div>
                 <div>
-                    <label>image(optional): <input type="file" id="avatar" name="image" accept="image/png, image/jpeg" onChange={handleChange}/></label>
+                    <label>image(max: 4.5M): <input type="file" id="avatar" name="image" accept="image/png, image/jpeg" onChange={handleChange}/></label>
                 </div>
                 <div>
                     <button onClick={makePost}>Save</button>
